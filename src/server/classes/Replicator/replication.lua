@@ -69,7 +69,6 @@ local function replicateToClient(self, client)
 end
 
 function replication:replicate(clients)
-	assert(false, "CANNOT REP")
 	assert(not self.replication, "Attempt to replicate an already-replicated class")
 
 	local className = self.className
@@ -182,7 +181,7 @@ function replication:unreplicate()
 	end
 	cache[id] = nil
 
-	local connection = replication.connectiono
+	local connection = replication.connection
 	if connection then
 		connection:Disconnect()
 	end

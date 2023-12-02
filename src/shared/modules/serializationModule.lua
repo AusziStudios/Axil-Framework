@@ -11,59 +11,6 @@ local ignoredKeys = {
 	"parent",
 }
 
---Instance serialization
-
-function serializationModule.serializeLocation(instance) --[DEPRICATED] Will turn an instance into a table, which can be saved in datastores. Use unserializeLocation to get back the instance.
-	local currentPath = {}
-	local currentInstance = instance
-	local currentParent = currentInstance.Parent
-	local valid = true
-	while currentParent ~= nil do
-		if currentInstance == game then
-			--table.insert(currentPath, 1, game.Name)
-			break
-		end
-		--[[for _, child in currentParent:GetChildren() do
-			if child.Name == currentInstance.Name and child ~= currentInstance then
-				warn("Attempt to serialize location with conflicting children")
-				valid = false
-				break
-			end
-		end]]
-		if not valid then
-			break
-		end
-		table.insert(currentPath, 1, currentInstance.Name)
-		currentInstance = currentParent
-		currentParent = currentInstance.Parent
-	end
-	if valid then
-		return currentPath
-	else
-		warn("BRUH ERROR")
-	end
-end
-
-function serializationModule.unserializeLocation(path) --[DEPRICATED] Turns a table created by serializeLocation back into its original instance. Does not create a new instance, only finds one at the path.
-	local currentInstance = game
-	local valid = true
-	for i = 1, #path do
-		--[[for _, child in currentInstance:GetChildren() do
-			if child.Name == path[i] and child ~= currentInstance:FindFirstChild(path[i]) then
-				warn("Attempt to unserialize location with conflicting children")
-				valid = false
-				break
-			end
-		end]]
-
-		currentInstance = currentInstance:FindFirstChild(path[i])
-	end
-	if valid then
-		return currentInstance
-	end
-end
-
---General serialization
 local function serialize(o)
 	local t = typeof(o)
 	if t == "table" then

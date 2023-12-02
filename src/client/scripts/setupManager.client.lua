@@ -4,6 +4,7 @@ require(game:GetService("ReplicatedStorage"):WaitForChild("modules"):WaitForChil
 
 _G("classes.Replicator")
 
+-- Load in all scripts automatically
 local loadedModules = {}
 local function loadModule(module)
 	if not module then
