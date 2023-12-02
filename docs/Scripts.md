@@ -2,4 +2,4 @@ Scripts are `ModuleScript` instances. The `setupManager` is the only `Script`/`L
 
 They are located in `src/server/scripts` and `src/client/scripts`.
 
-Scripts utilise [Classes](Classes/Index) to control larger game behavior. They are basically just regular scripts.
+Scripts utilise [Classes](Classes/Index.md) to control larger game behavior. They are basically just regular scripts.

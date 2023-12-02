@@ -1,4 +1,4 @@
-[Go back to the modules index](index)
+[Go back to the modules index](index.md)
 
 ---
 

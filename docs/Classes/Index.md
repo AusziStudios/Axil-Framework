@@ -1,4 +1,4 @@
-[Go back to the main index](../index)
+[Go back to the main index](../index.md)
 
 ---
 
@@ -9,12 +9,12 @@ Here are all of the pre-included classes. They exist in the project directly, an
 
 When creating a new class, you can start from any of these, or none at all (if you wish you create your own class system).
 
-1. [Class](Class)
+1. [Class](Class.md)
 is the pre-included base class for almost all objects.
-1. [Emitter](Emitter) adds basic syncronous events.
-2. [Replicator](Replicator) adds syncronous events to communicate accross the client-server boundary and replicates classes to clients.
-3. [Template](Template) allows for creating sub-classes which inherit data from eachother. This is useful for things like a complex team system, with different variations for each team that are manually set and not random. ***UNDOCUMENTED***
-4. [Object](Object) assigns a physical model to each template. ***UNDOCUMENTED***
+1. [Emitter](Emitter.md) adds basic syncronous events.
+2. [Replicator](Replicator.md) adds syncronous events to communicate accross the client-server boundary and replicates classes to clients.
+3. [Template](Template.md) allows for creating sub-classes which inherit data from eachother. This is useful for things like a complex team system, with different variations for each team that are manually set and not random. ***UNDOCUMENTED***
+4. [Object](Object.md) assigns a physical model to each template. ***UNDOCUMENTED***
 
 # Example
 
