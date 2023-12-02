@@ -21,7 +21,7 @@ Axil-Framework is starting point for creating an object-oriented Roblox game.
 # Framework
 
 See the documentation on the following:
-1. [Modules](Modules/Index) — Specifically, the [Resource Module](Modules/ResourceModule.md) is important to look at.
+1. [Modules](Modules/Index.md) — Specifically, the [Resource Module](Modules/ResourceModule.md) is important to look at.
 1. [Scripts](Scripts.md)
 2. [Classes](Classes/Index.md)
 
