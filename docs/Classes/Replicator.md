@@ -1,4 +1,4 @@
-[Go back to the classes index](index.md)
+[Go back to the classes index](Index.md)
 
 ---
 

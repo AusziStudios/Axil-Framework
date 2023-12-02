@@ -1,4 +1,4 @@
-[Go back to the main index](../index.md)
+[Go back to the main index](../Index.md)
 
 ---
 
