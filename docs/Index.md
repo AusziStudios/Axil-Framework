@@ -1,4 +1,4 @@
-# Synopsis
+# Overview
 
 Axil-Framework is starting point for creating an object-oriented Roblox game.
 
