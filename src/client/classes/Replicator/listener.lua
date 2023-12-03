@@ -49,7 +49,7 @@ function listener:onClient(eventName, callback)
 	self:call("bindClient", eventName, callback)
 end
 
-replicatorRemotes.establish.OnClientEvent:Connect(function(establishedRemotes)
+replicatorRemotes:WaitForChild("establish").OnClientEvent:Connect(function(establishedRemotes)
 	for _, remote in ipairs(establishedRemotes) do
 		remote.OnClientEvent:Connect(function(replicationId, vararg)
 			local self = cache[replicationId]
