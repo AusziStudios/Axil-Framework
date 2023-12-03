@@ -9,7 +9,10 @@
     "ReplicatedStorage": {
       "$ignoreUnknownInstances": true,
       "remotes": {
-        "$className": "Folder"
+        "$className": "Folder",
+        "Replicator": {
+          "$className": "Folder"
+        }
       },
       "$path": "src/shared"
     },
