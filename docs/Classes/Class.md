@@ -55,7 +55,9 @@ An iteration function, loops through all instances.
 For example
 
 ```lua
-for 
+for _, self in Class:iter() do
+	-- Preform actions with self
+end
 ```
 
 ---
