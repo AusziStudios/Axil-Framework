@@ -86,4 +86,18 @@ end)
 
 ---
 
-**:iterAll(methodName**)
+**:iterAll(methodName, ...)**
+
+Calls a method on all instances, passing the paramaters.
+
+Example, using the [Object](Object.md) class. It runs `:getModel()` on all instances, which makes every instance create their model under workspace.
+```lua
+Object:iterAll("getModel", workspace)
+```
+
+What is actually being run:
+```lua
+for _, self in Object:iter() do
+	self:getModel(workspace)
+end
+```
