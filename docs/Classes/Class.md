@@ -42,9 +42,21 @@ Located in `Class.iterate`
 
 **:addInstance()**
 
+Instances are automatically added when initialized.
+
 ---
 
-**:getInstances()**
+**:getInstances(): table**
+
+Returns an array of all instances added through `:addInstances()` (instances are automatically added).
+
+```lua
+for _, self in ipairs(Class:getInstances()) do
+	-- Preform actions with self
+end
+```
+
+It's more efficient to use iterator functions.
 
 ---
 
