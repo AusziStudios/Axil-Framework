@@ -18,7 +18,6 @@ function World:__init(worldName, terrainSize, ...)
 	-- Because it's being overwritten,
 	-- you need to call this to inherit it's behavior
 	Emitter.__init(self, worldName, terrainSize, ...)
-        -- FYI: Emitter doesn't contain anything important in the __init unless you are going to use replication
 
 	-- You can update properties here
 	self.worldName = worldName
@@ -26,6 +25,8 @@ function World:__init(worldName, terrainSize, ...)
 end
 
 function World:generate()
+	self:clear() -- Call a method on this object
+
 	local length = self.terrainSize / 2
 
 	terrain:FillBlock(
