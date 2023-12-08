@@ -42,9 +42,21 @@ Located in `Class.iterate`
 
 **:addInstance()**
 
+Instances are automatically added when initialized.
+
 ---
 
-**:getInstances()**
+**:getInstances(): table**
+
+Returns an array of all instances added through `:addInstances()` (instances are automatically added).
+
+```lua
+for _, self in ipairs(Class:getInstances()) do
+	-- Preform actions with self
+end
+```
+
+It's more efficient to use iterator functions.
 
 ---
 
@@ -55,7 +67,9 @@ An iteration function, loops through all instances.
 For example
 
 ```lua
-for 
+for _, self in Class:iter() do
+	-- Preform actions with self
+end
 ```
 
 ---
@@ -72,4 +86,18 @@ end)
 
 ---
 
-**:iterAll(methodName**)
+**:iterAll(methodName, ...)**
+
+Calls a method on all instances, passing the paramaters.
+
+Example, using the [Object](Object.md) class. It runs `:getModel()` on all instances, which makes every instance create their model under workspace.
+```lua
+Object:iterAll("getModel", workspace)
+```
+
+What is actually being run:
+```lua
+for _, self in Object:iter() do
+	self:getModel(workspace)
+end
+```
