@@ -4,11 +4,11 @@ local Object = {}
 
 local RunService = game:GetService("RunService")
 
-local Template = _G("classes.Template")
-Template:create("Object", Object)
+local Preset = _G("classes.Preset")
+Preset:create("Object", Object)
 
 function Object:__init(...)
-    Template.__init(self, ...)
+    Preset.__init(self, ...)
 
     self.model = nil
     self.baseModel = nil

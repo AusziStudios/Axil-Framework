@@ -67,7 +67,7 @@ local function onClientReplicate(replicatedClass)
         warn("Duplicate class cached on client")
         return
     end
-    local self = class:newFromTemplate(replicatedClass, table.unpack(initParams))
+    local self = class:newFromPreset(replicatedClass, table.unpack(initParams))
     cache[replicationId] = self
 
     self:call("replicate")

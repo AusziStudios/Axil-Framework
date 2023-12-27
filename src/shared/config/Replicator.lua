@@ -3,7 +3,7 @@ return {
         "items",
         "parent",
         "subClasses",
-        "templateItem",
+        "presetItem",
         "callbacks",
         "replicationCallbacks",
     }

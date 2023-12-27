@@ -1,9 +1,9 @@
 -- An abstract class which inherits from Replicators. Is initalized with a table, conntaining information about all instances.
 
-local Template = {}
+local Preset = {}
 
 local Replicator = _G("classes.Replicator")
-Replicator:create("Template", Template)
+Replicator:create("Preset", Preset)
 
 local tools = _G("modules.tools")
 
@@ -65,7 +65,7 @@ local function formatRawItem(items, class)
 	return items
 end
 
-function Template:__create(items, itemClass)
+function Preset:__create(items, itemClass)
 	if type(items) ~= "table" then
 		return
 	end
@@ -75,29 +75,29 @@ function Template:__create(items, itemClass)
 	self.itemClass = itemClass
 
 	self.id = items.id
-	self.templateItems = items
+	self.presetItems = items
 
 	--Format items
-	-- if self.className == "Template" then -- PROBLEMS?
+	-- if self.className == "Preset" then -- PROBLEMS?
 	-- 	return
 	-- end
 
 	items = formatRawItem({}, items)
-	self.templateItems = items
+	self.presetItems = items
 end
 
-function Template:__init(id)
+function Preset:__init(id)
 	Replicator.__init(self, id)
 
 	if not id then
-		error("Attempt to initialize TemplateItem without an id")
+		error("Attempt to initialize PresetItem without an id")
 		return
 	end
 
-	local items = self.templateItems
+	local items = self.presetItems
 	local item = items[id]
 	if not item then
-		warn("No TemplateItem found")
+		warn("No PresetItem found")
 		return
 	end
 	item = tools.deepCopy(item)
@@ -109,7 +109,7 @@ function Template:__init(id)
 		self[k] = v
 	end
 	self.id = id
-	self.templateItem = item
+	self.presetItem = item
 
 	local update = self.update
 	if update then
@@ -121,17 +121,17 @@ function Template:__init(id)
 	return item
 end
 
-function Template:isA(anscestorId)
+function Preset:isA(anscestorId)
 	local id = self.id
 
 	assert(id, "Attempt to use isA on object with invalid id")
 
-	local templateItems = Template.templateItems
-	local templateItem = templateItems[id]
+	local presetItems = Preset.presetItems
+	local presetItem = presetItems[id]
 
-	assert(templateItem, "Attempt to use isA on object with no templateItem found")
+	assert(presetItem, "Attempt to use isA on object with no presetItem found")
 
-	local parent = templateItem.parent
+	local parent = presetItem.parent
 	while parent do
 		local parentId = parent.id
 		if parentId and parentId == anscestorId then
@@ -142,9 +142,9 @@ function Template:isA(anscestorId)
 	return false
 end
 
-function Template:randomId(validate)
+function Preset:randomId(validate)
 	local possible = {}
-	for id, item in pairs(self.templateItems) do
+	for id, item in pairs(self.presetItems) do
 		if validate then
 			if not validate(item) then
 				continue
@@ -161,8 +161,8 @@ function Template:randomId(validate)
 	return id
 end
 
-function Template:turnInto(newId)
+function Preset:turnInto(newId)
 	error("Cannot use turnInto yet")
 end
 
-return Template
+return Preset

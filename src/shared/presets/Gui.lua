@@ -17,7 +17,7 @@ local gui = {
 
 _G.gui = gui
 
-local template = {
+local preset = {
 	id = "baseGui",
 
 	subClasses = {
@@ -160,7 +160,7 @@ local template = {
 						{
 							className = "TextButton",
 							properties = {
-								["Name"] = "ButtonTemplate",
+								["Name"] = "ButtonPreset",
 								["AnchorPoint"] = Vector2.new(0.5, 0.5),
 								["Size"] = UDim2.new(1, 0, 1, 0),
 								["BackgroundTransparency"] = 0.15,
@@ -168,7 +168,7 @@ local template = {
 								["Text"] = "",
 								["TextScaled"] = true,
 								["TextColor3"] = Color3.new(1, 1, 1),
-								["Visible"] = false, --Template
+								["Visible"] = false, --Preset
 							},
 							children = {
 								{
@@ -285,4 +285,4 @@ local template = {
 	},
 }
 
-return template
+return preset

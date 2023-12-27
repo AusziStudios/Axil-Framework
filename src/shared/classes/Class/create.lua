@@ -52,8 +52,8 @@ function create:multiCreate(className, class, superClasses, ...)
 	return createClass(self, className, class, superClasses, false, ...)
 end
 
-function create:newFromTemplate(template, ...)	
-	local classInstance = createClass(self, self.className or template.className, template, nil, true, ...)
+function create:newFromPreset(preset, ...)	
+	local classInstance = createClass(self, self.className or preset.className, preset, nil, true, ...)
 
 	local initializeMethod = classInstance["__init"]
 	if initializeMethod then

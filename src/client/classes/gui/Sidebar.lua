@@ -12,19 +12,19 @@ function Sidebar:__init(guiName, guiParent)
 	self:on("apply", function(instance)
 		table.clear(self.buttonInstances)
 
-		local templateButton = instance:WaitForChild("Content"):WaitForChild("ButtonTemplate")
+		local presetButton = instance:WaitForChild("Content"):WaitForChild("ButtonPreset")
 
 		local activeButton = nil
 
 		for index, data in ipairs(self.buttons) do
 			local text = data.text
 
-			local newButton = templateButton:Clone()
+			local newButton = presetButton:Clone()
 			newButton.Name = text
 			newButton.Text = text
 			newButton.LayoutOrder = index
 			newButton.Visible = true
-			newButton.Parent = templateButton.Parent
+			newButton.Parent = presetButton.Parent
 
 			local callback = data.callback
 			newButton.MouseButton1Click:Connect(function()

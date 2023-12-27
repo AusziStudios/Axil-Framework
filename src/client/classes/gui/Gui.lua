@@ -1,9 +1,9 @@
 local Gui = {}
 
-local Template = _G("classes.Template")
-local GuiTemplate = _G("templates.Gui")
+local Preset = _G("classes.Preset")
+local GuiPreset = _G("presets.Gui")
 
-Template:create("Gui", Gui, GuiTemplate, "Gui")
+Preset:create("Gui", Gui, GuiPreset, "Gui")
 
 local allGuis = {}
 
@@ -30,7 +30,7 @@ end
 function Gui:__init(guiName, guiParent)
 	assert(type(guiName) == "string", "Attempt to initialize Gui withought valid guiName")
 
-	Template.__init(self, self.className)
+	Preset.__init(self, self.className)
 
 	self.name = guiName
 	self.parent = guiParent
@@ -42,22 +42,22 @@ end
 function Gui:__create()
 	local className = self.className
 
-	Template.__create(self, className, className)
+	Preset.__create(self, className, className)
 end
 
 function Gui:apply()
-	local templateItem = self.templateItem
+	local presetItem = self.presetItem
 	local parent = self.parent
 
 	local existingInstance = self.instance
 
-	assert(templateItem, "Attempt to apply Gui withought templateItem")
+	assert(presetItem, "Attempt to apply Gui withought presetItem")
 
 	if existingInstance then
 		existingInstance:Destroy()
 	end
 
-	local guiInstance = makeGui(templateItem)
+	local guiInstance = makeGui(presetItem)
 	self.instance = guiInstance
 	guiInstance.Name = self.name or guiInstance.Name
 
