@@ -13,8 +13,8 @@ When creating a new class, you can start from any of these, or none at all (if y
 is the pre-included base class for almost all objects.
 1. [Emitter](Emitter.md) adds basic syncronous events.
 2. [Replicator](Replicator.md) adds syncronous events to communicate across the client-server boundary and replicates classes to clients.
-3. [Template](Template.md) allows for creating sub-classes which inherit data from each other. This is useful for things like a complex team system, with different variations for each team that are manually set and not random. ***UNDOCUMENTED***
-4. [Object](Object.md) assigns a physical model to each template. ***UNDOCUMENTED***
+3. [Preset](Preset.md) allows for creating sub-classes which inherit data from each other. This is useful for things like a complex team system, with different variations for each team that are manually set and not random. ***UNDOCUMENTED***
+4. [Object](Object.md) assigns a physical model to each preset. ***UNDOCUMENTED***
 
 # Example
 

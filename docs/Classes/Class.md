@@ -27,7 +27,7 @@ Located in `Class.create`
 
 ---
 
-**:newFromTemplate(template, ...)**
+**:newFromPreset(preset, ...)**
 
 ---
 
