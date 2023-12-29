@@ -56,6 +56,6 @@ This is because replicator is located in `src/client` *and* `src/server`, the tw
 
 If the running this script is on the server, server script service will be checked first, and it will be found there.
 
-If the running this script is on the client, Roblox doesn't replicate ServerScriptService so it will appear empty. Replicator will be found in the 4th directory, ReplicatedStorage.
+If the running this script is on the client, Roblox doesn't replicate ServerScriptService so it will appear empty. Replicator will be found in the 4th directory, StarterPlayerScripts.
 
 ---
