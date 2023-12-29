@@ -10,7 +10,7 @@ Emitter:create("World", World)
 local terrain = workspace.Terrain
 
 -- Default properties
-World.worldName = "Default World"
+World.worldName = "Unnamed World"
 World.terrainSize = 0
 World.isGenerated = false
 
