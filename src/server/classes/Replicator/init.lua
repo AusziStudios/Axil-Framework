@@ -7,6 +7,6 @@ local replicatorReplication = require(script:WaitForChild("replication"))
 local replicatorListener = require(script:WaitForChild("listener"))
 local replicatorOwnership = require(script:WaitForChild("ownership"))
 
-Emitter.inherit(Replicator, replicatorReplication, replicatorListener, replicatorOwnership)
+Replicator:inheritMultipleFrom({ replicatorReplication, replicatorListener, replicatorOwnership })
 
 return Replicator
