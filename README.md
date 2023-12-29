@@ -14,4 +14,4 @@ Axil-Framework is starting point for creating an object-oriented Roblox game.
 It uses [Rojo](https://rojo.space) (or any other similar program) to synchronize code from the filesystem to the Roblox project.
 Use [HotSwap](https://devforum.roblox.com/t/hotswap-plugin-speed-up-plugin-development/10310) to run plugins.
 
-***Check out the [docs](https://auszistudios.github.io/Axil-Framework/Index) to learn more.***
+***Check out the [docs](https://auszistudios.github.io/Axil-Framework) to learn more.***
