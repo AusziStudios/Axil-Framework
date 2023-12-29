@@ -1,4 +1,4 @@
-# *PLEASE USE LATESTS DOCS [HERE](https://auszistudios.github.io/Axil-Framework/)*
+# *PLEASE USE LATEST DOCS [HERE](https://auszistudios.github.io/Axil-Framework/)*
 
 # Overview
 
