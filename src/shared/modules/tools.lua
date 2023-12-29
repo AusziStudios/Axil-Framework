@@ -1,5 +1,46 @@
 local tools = {}
 
+-- Inheritance
+function tools.inherit(from, to)
+	local metatableFrom = getmetatable(from) or {}
+	local metatableTo = getmetatable(to) or {}
+
+	local finalMetatable = {}
+	for key, value in pairs(metatableFrom) do
+		finalMetatable[key] = value
+	end
+	for key, value in pairs(metatableTo) do
+		finalMetatable[key] = value
+	end
+
+    -- Extends the current __index function, if any
+	local originalIndex = rawget(finalMetatable, "__index")
+	function finalMetatable:__index(index) -- Values are inherited via __index, not via cloning
+        -- Patching previous __index
+		local value = from[index]
+        if value ~= nil then
+            return value
+        end
+
+		if type(originalIndex) == "table" then
+			value = rawget(originalIndex, index)
+		elseif type(originalIndex) == "function" then
+			value = originalIndex(self, index)
+		end
+
+        return value
+	end
+
+	setmetatable(to, finalMetatable)
+end
+
+function tools.inheritMultiple(fromMultiple, to)
+	for _, from in ipairs(fromMultiple) do
+		tools.inherit(from, to)
+	end
+end
+
+-- Tables
 function tools.deepCopy(orig, copies)
     copies = copies or {}
     local orig_type = type(orig)
