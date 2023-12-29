@@ -10,6 +10,6 @@ Axil-Framework is starting point for creating an object-oriented Roblox game.
   - Events built into classes
 - Easier way to access other scripts with the [Resource Module](Modules/ResourceModule.md).
 
-It uses [Rojo](https://rojo.space) (or any other similar program.md) to synchronize code from the filesystem to the Roblox project.
+It uses [Rojo](https://rojo.space) (or any other similar program) to synchronize code from the filesystem to the Roblox project.
 
 ***Check out the [docs](docs/Index.md) to learn more.***
