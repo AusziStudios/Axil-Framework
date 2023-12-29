@@ -29,7 +29,8 @@ See the documentation on the following:
 
 ### Undocumented
 - Config
-- Multiple class methods
+- Certain class methods
+- serializationModule
 
 ### Future Features
 
