@@ -1,3 +1,7 @@
+[Go back to the classes index](Index.md)
+
+---
+
 Located in `shared.classes.Class`
 
 # General
@@ -86,7 +90,7 @@ end)
 
 Calls a method on all instances, passing the paramaters.
 
-Example, using the [Object](AxilFramework/Classes/Object.md) class. It runs `:getModel()` on all instances, which makes every instance create their model under workspace.
+Example, using the [Object](Object.md) class. It runs `:getModel()` on all instances, which makes every instance create their model under workspace.
 ```lua
 Object:iterAll("getModel", workspace)
 ```

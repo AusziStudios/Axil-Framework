@@ -1,3 +1,7 @@
+[Go back to the classes index](Index.md)
+
+---
+
 # Overview
 
 It is the first pre-included class to not exist in `src/shared`, but twice in `src/client` and `src/server`.
@@ -81,7 +85,7 @@ Calls all currently replicated clients.
 
 ## Ownership
 
-Ownership is used to prescribe a specific player a certain class, such as their inventory, where only they can take items and remove items.
+Ownership is used to prescribe a specific player a certain class, such as theiri nventory, where only they can take items and remove items.
 
 Nothing about ownership is ever exposed to the client.
 

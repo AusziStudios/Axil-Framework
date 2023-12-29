@@ -1,3 +1,7 @@
+[Go back to the classes index](Index.md)
+
+---
+
 A class which runs synchronous events without crossing the client-server boundary.
 
 Located in `shared.Emitter`.

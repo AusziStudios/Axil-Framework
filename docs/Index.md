@@ -3,25 +3,25 @@
 Axil-Framework is starting point for creating an object-oriented Roblox game.
 
 ## What is it's purpose?
-- A cleaner way to structure a game project.
+- A cleaner way to structure a game project. 
 - OOP with easy inheritance to make code more reusable.
-- Better communication between the client and server with the [Replicator](Classes/Replicator.md) class
+- Better communication between the client and server with the [Replicator](Axil-Framework/Classes/Replicator.md) class
   - Built in client-server replication: copy classes to the client
   - Events built into classes
-- Easier way to access other scripts with the [Resource Module](Modules/ResourceModule.md).
+- Easier way to access other scripts with the [Resource Module](Axil-Framework/Modules/ResourceModule.md).
 
 # Getting Started
 
 1. Clone this repository to your file system.
 
-2. Install and set up [Rojo](https://rojo.space/docs/v7/getting-started/installation/.md).
+2. Install and set up [Rojo](https://rojo.space/docs/v7/getting-started/installation/).
 
-2. Start syncing in VsCode and then the Roblox Studio plugin.
+3. Start syncing in VsCode and then the Roblox Studio plugin.
 
 # Framework
 
 See the documentation on the following:
-1. [Modules](Modules/Index.md) — Specifically, the [Resource Module](Modules/ResourceModule.md) is important to look at.
+1. [Modules](Modules/Index.md) — Specifically, the [Resource Module](Axil-Framework/Modules/ResourceModule.md) is important to look at.
 1. [Scripts](Scripts.md)
 2. [Classes](Classes/Index.md)
 
@@ -32,5 +32,6 @@ See the documentation on the following:
 - Certain class methods
 - serializationModule
 
-### Project
-See the [GitHub Project](https://github.com/orgs/AusziStudios/projects/13) for progress on new features and bug-fixes.
+### Links
+- [GitHub Repository](https://github.com/AusziStudios/Axil-Framework)
+- [GitHub Project](https://github.com/orgs/AusziStudios/projects/13)
