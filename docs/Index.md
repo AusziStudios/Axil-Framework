@@ -32,6 +32,5 @@ See the documentation on the following:
 - Certain class methods
 - serializationModule
 
-### Future Features
-
-- Libraries (add new functions to `math`, `string`, `debug`, and `table`. Also, create new ones that don't exist.)
+### Project
+See the [GitHub Project](https://github.com/orgs/AusziStudios/projects/13) for progress on new features and bug-fixes.
