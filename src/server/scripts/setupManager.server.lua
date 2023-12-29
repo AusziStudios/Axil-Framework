@@ -4,7 +4,6 @@ require(game:GetService("ReplicatedStorage"):WaitForChild("modules"):WaitForChil
 -- Do other stuff here, such as requiring other scripts.
 -- _G("scripts.somethingManager")
 
-
 -- # EXAMPLE FROM DOCUMENTATION #
 
 -- Initialize the Replicator
