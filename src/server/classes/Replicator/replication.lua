@@ -14,7 +14,7 @@ local HttpService = game:GetService("HttpService")
 
 local Emitter = _G("classes.Emitter")
 
-local config = _G("config.Replicator")
+local config = _G("config.classes.Replicator")
 
 function replication:__init(...)
 	Emitter.__init(self, ...)
