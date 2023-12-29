@@ -1,6 +1,6 @@
 local create = {}
 
-local config = _G("config.Class")
+local config = _G("config.classes.Class")
 
 local tools = _G("modules.tools")
 
@@ -95,7 +95,7 @@ function create:inheritFrom(class)
 end
 
 function create:inheritMultipleFrom(classes)
-	tools.inherit(classes, self)
+	tools.inheritMultiple(classes, self)
 end
 
 function create:create(className, class, ...)
