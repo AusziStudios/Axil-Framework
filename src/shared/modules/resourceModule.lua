@@ -2,7 +2,7 @@ local resourceModule = {}
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-local config = ReplicatedStorage:WaitForChild("config")
+local config = ReplicatedStorage:WaitForChild("config"):WaitForChild("modules")
 local resourceModuleConfig = require(config:WaitForChild("resourceModule"))
 
 local originalRequire = require
