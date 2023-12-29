@@ -6,7 +6,7 @@ setmetatable(Class, Class)
 
 local tools = _G("modules.tools")
 
-local config = _G("config.Class")
+local config = _G("config.classes.Class")
 
 for _, moduleName in ipairs(config.SUB_MODULES) do
 	local module = require(script:WaitForChild(moduleName))
