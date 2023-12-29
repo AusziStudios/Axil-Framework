@@ -9,17 +9,14 @@ local tools = _G("modules.tools")
 local config = _G("config.Class")
 
 for _, moduleName in ipairs(config.SUB_MODULES) do
-	for methodName, method in pairs(require(script:WaitForChild(moduleName))) do
-		Class[methodName] = method
-	end
-end
+	local module = require(script:WaitForChild(moduleName))
 
-function Class:__init()
-	-- To avoid errors on classes which call it
-end
+	tools.inherit(module, Class)
 
-function Class:__serialize(serializedSelf)
-	return serializedSelf
+	-- TODO: REMOVE
+	-- for methodName, method in pairs(require(script:WaitForChild(moduleName))) do
+	-- 	Class[methodName] = method
+	-- end	
 end
 
 function Class:label()
@@ -39,6 +36,15 @@ function Class:label()
 	end
 
 	return "{ "..className..": "..address..replicationString.." }"
+end
+
+
+-- To avoid errors on classes which call them:
+function Class:__init()
+	return
+end
+function Class:__serialize(serializedSelf)
+	return serializedSelf
 end
 
 return Class
