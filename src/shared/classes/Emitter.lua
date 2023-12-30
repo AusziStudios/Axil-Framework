@@ -5,6 +5,16 @@ local Emitter = {}
 local Class = _G("classes.Class")
 Class:create("Emitter", Emitter)
 
+function Emitter:__create(...)
+	Class.__create(self, ...)
+	self.callbacks = {}
+end
+
+function Emitter:__init(...)
+	Class.__init(self, ...)
+	self.callbacks = {}
+end
+
 function Emitter:call(eventName, ...)
 	local callbacks = self.callbacks or {}
 	local eventCallbacks = callbacks[eventName] or {}
@@ -45,11 +55,6 @@ function Emitter:hasBindings(eventName)
 		return true
 	end
 	return false
-end
-
-function Emitter:__init(...)
-	Class.__init(self, ...)
-	self.callbacks = nil
 end
 
 return Emitter
