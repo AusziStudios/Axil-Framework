@@ -18,86 +18,103 @@ local replicatorListener = require(script:WaitForChild("listener"))
 Emitter.inherit(Replicator, replicatorListener)
 
 local function findCachedTable(object)
-    if type(object) ~= "table" then
-        return
-    end
+	if type(object) ~= "table" then
+		return
+	end
 
-    local replication = object["replication"]
-    if not replication then
-        return
-    end
+	local replication = object["replication"]
+	if not replication then
+		return
+	end
 
-    local replicationId = replication["id"]
-    if not replicationId then
-        return
-    end
+	local replicationId = replication["id"]
+	if not replicationId then
+		return
+	end
 
-    local cachedTable = cache[replicationId]
-    return cachedTable
+	local cachedTable = cache[replicationId]
+	return cachedTable
 end
 
 local function replaceReplicated(replicatedClass)
-    for _, object in ipairs(tools.expandTable(replicatedClass)) do
-        for key, value in pairs(object) do
-            local newKey = findCachedTable(key)
-            local newValue = findCachedTable(value)
-            
-            object[newKey or key] = newValue or value
-        end
-    end
+	for _, object in ipairs(tools.expandTable(replicatedClass)) do
+		for key, value in pairs(object) do
+			local newKey = findCachedTable(key)
+			local newValue = findCachedTable(value)
+			
+			object[newKey or key] = newValue or value
+		end
+	end
 end
 
+-- TODO: Remove
+-- function create:newFromPreset(preset, ...)	
+-- 	local classInstance = createClass(self, self.className or preset.className, preset, nil, true, ...)
+
+-- 	local initializeMethod = classInstance["__init"]
+-- 	if initializeMethod then
+-- 		initializeMethod(classInstance, table.unpack(classInstance.initParams))
+-- 	end
+	
+-- 	return classInstance
+-- end
+
 local function onClientReplicate(replicatedClass)
-    replicatedClass = serializationModule.unserializeCyclic(replicatedClass)
+	replicatedClass = serializationModule.unserializeCyclic(replicatedClass)
 
-    local className = replicatedClass.className
-    local class = _G("classes."..tostring(className))
+	local className = replicatedClass.replication.className
+	local class = _G.require("classes."..tostring(className))
 
-    if not class then
-        warn("Attempt to replicate class which could not be found", className)
-        return
-    end
+	if not class then
+		warn("Attempt to replicate class which could not be found", className)
+		return
+	end
 
-    replaceReplicated(replicatedClass)
+	replaceReplicated(replicatedClass)
 
-    local initParams = replicatedClass.initParams or {}
-    local replicationId = replicatedClass.replication.id
+	local initParams = replicatedClass.initParams or {}
+	local replicationId = replicatedClass.replication.id
 
-    if cache[replicationId] then
-        warn("Duplicate class cached on client")
-        return
-    end
-    local self = class:newFromPreset(replicatedClass, table.unpack(initParams))
-    cache[replicationId] = self
+	if cache[replicationId] then
+		warn("Duplicate class cached on client")
+		return
+	end
 
-    self:call("replicate")
+	-- TODO REMOVE: local self = class:newFromPreset(replicatedClass, table.unpack(initParams))
+	-- INHERIT/CREATE THE CLASS
 
-    replicatorRemotes:WaitForChild("replicate"):FireServer(replicationId)
+	local self = class:new(table.unpack(initParams))
+
+	cache[replicationId] = self
+
+	self:call("replicate")
+
+	replicatorRemotes:WaitForChild("replicate"):FireServer(replicationId)
 end
 
 local function onClientUnreplicate(replicationId)
-    local self = cache[replicationId]
+	local self = cache[replicationId]
 
-    if not self then
-        return
-    end
+	if not self then
+		return
+	end
 
-    self.replication = nil
-    self:call("unreplicate")
+	self.replication = nil
+	self:call("unreplicate")
 end
 
 replicatorRemotes:WaitForChild("replicate").OnClientEvent:Connect(onClientReplicate)
 replicatorRemotes:WaitForChild("unreplicate").OnClientEvent:Connect(onClientUnreplicate)
 
 function Replicator:getReplication()
-    local replication = self.replication
+	local replication = self.replication
 
-    assert(replication, "Attempt to getReplication without replication")
+	assert(replication, "Attempt to getReplication without replication")
 
-    local replicationId = replication.id
-    assert(replicationId, "Attempt to getReplication without replicationId")
+	local replicationId = replication.id
+	assert(replicationId, "Attempt to getReplication without replicationId")
 
-    return replication
+	return replication
 end
 
 return Replicator
