@@ -5,10 +5,10 @@ local config = _G("config.classes.Class")
 local tools = _G("modules.tools")
 
 -- Prevent direct class instances
--- function create.__call()
--- 	error("Cannot create direct instances of Class")
--- end
--- create.new = create.__call
+function create.__call()
+	error("Cannot create direct instances of Class")
+end
+create.new = create.__call
 
 function create:inherit(class)
 	tools.inherit(self, class)
