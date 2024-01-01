@@ -43,6 +43,9 @@ end
 function Class:__init()
 	return
 end
+function Class:__create()
+	
+end
 function Class:__serialize(serializedSelf)
 	return serializedSelf
 end
