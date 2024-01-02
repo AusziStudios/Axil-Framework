@@ -100,12 +100,9 @@ end
 
 -- On events
 function listener:onServer(eventName, callback)
-	if not self:isReplicated() then
-		warn("Attempt to bind onServer when not replicated")
-		return
+	if self:isReplicated() then
+		self:establish(eventName)
 	end
-
-	self:establish(eventName)
 
 	local replicationCallbacks = self.replicationCallbacks or {}
 	local eventCallbacks = replicationCallbacks[eventName] or {}

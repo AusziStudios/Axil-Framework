@@ -20,6 +20,14 @@ function replication:__init(...)
 	Emitter.__init(self, ...)
 
 	self.initParams = { ... }
+	self.replicationCallbacks = {}
+	self.replication = nil
+end
+
+function replication:__create(...)
+	Emitter.__create(self, ...)
+
+	self.replicationCallbacks = {}
 	self.replication = nil
 end
 
@@ -110,6 +118,10 @@ function replication:replicate(clients)
 		for _, client in ipairs(Players:GetPlayers()) do
 			replicateToClient(self, client)
 		end
+	end
+
+	for eventName in pairs(self.replicationCallbacks or {}) do
+		self:establish(eventName)
 	end
 
 	self:call("replicate")
