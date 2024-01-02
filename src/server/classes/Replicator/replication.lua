@@ -39,6 +39,7 @@ local function replicateToClient(self, client)
 	local replicationId = replication.id
 
 	local clientReplication = {
+		className = self.className,
 		remotes = replication.remotes,
 		id = replicationId,
 	}
