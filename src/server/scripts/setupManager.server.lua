@@ -6,3 +6,4 @@ require(game:GetService("ReplicatedStorage"):WaitForChild("modules"):WaitForChil
 
 -- Run the example scripts
 _G("scripts.examples.worldManager")
+_G("scripts.examples.inventoryManager")
