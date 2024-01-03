@@ -8,11 +8,13 @@ Class:create("Emitter", Emitter)
 function Emitter:__create(...)
 	Class.__create(self, ...)
 	self.callbacks = {}
+	self:call("create", ...)
 end
 
 function Emitter:__init(...)
 	Class.__init(self, ...)
 	self.callbacks = {}
+	self:call("init", ...)
 end
 
 function Emitter:call(eventName, ...)
