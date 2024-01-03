@@ -6,8 +6,6 @@ Replicator:create("examples.inventory.Container", Container)
 Container.name = "Unnamed Container"
 
 function Container:__init(containerName)
-	print(self.replicate, self.establish)
-
 	self.name = containerName
 	self.items = {}
 
