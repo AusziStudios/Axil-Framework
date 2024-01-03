@@ -102,4 +102,37 @@ function tools.respectClone(object, allObjects)
 	return object
 end
 
+local function deepFilter(object, callback, objects)
+	if table.find(objects, object) then
+		return
+	end
+
+	callback(object)
+
+	if type(object) ~= "table" then
+		return
+	end
+	table.insert(objects, object)
+
+	for key, value in pairs(object) do
+		deepFilter(key, callback, objects)
+		deepFilter(value, callback, objects)
+	end
+end
+function tools.deepFilter(object, callback)
+	deepFilter(object, callback, {})
+end
+
+function tools.deepContains(object, target)
+	local targetFound = false
+
+	tools.deepFilter(object, function(value)
+		targetFound = targetFound or value == target
+
+		return value
+	end)
+
+	return targetFound
+end
+
 return tools
