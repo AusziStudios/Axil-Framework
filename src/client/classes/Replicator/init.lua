@@ -94,17 +94,6 @@ end
 replicatorRemotes:WaitForChild("replicate").OnClientEvent:Connect(onClientReplicate)
 replicatorRemotes:WaitForChild("unreplicate").OnClientEvent:Connect(onClientUnreplicate)
 
-function Replicator:getReplication()
-	local replication = self.replication
-
-	assert(replication, "Attempt to getReplication without replication")
-
-	local replicationId = replication.id
-	assert(replicationId, "Attempt to getReplication without replicationId")
-
-	return replication
-end
-
 replicatorRemotes:WaitForChild("ready"):FireServer()
 
 return Replicator

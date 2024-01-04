@@ -1,7 +1,9 @@
 local ownership = {}
 
 function ownership:setOwner(client)
-	local replication = self:getReplication(client)
+	local replication = self:isReplicated()
+	assert(replication, "Attempt to setOwner without replication")
+	
 
 	self:addClient(client)
 
@@ -9,7 +11,8 @@ function ownership:setOwner(client)
 end
 
 function ownership:getOwner()
-	local replication = self:getReplication()
+	local replication = self:isReplicated()
+	assert(replication, "Attempt to setOwner without replication")
 
 	local owner = replication.owner
 

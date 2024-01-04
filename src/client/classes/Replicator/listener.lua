@@ -8,7 +8,7 @@ local serializationModule = _G("modules.serializationModule")
 
 -- Find events
 function listener:establish(eventName)
-	local replication = self:getReplication()
+	local replication = self.replication
 	assert(replication, "Attempt to establish without replication")
 
 	local remotes = replication.remotes
@@ -24,7 +24,7 @@ end
 function listener:callServer(eventName, ...)
 	assert(type(eventName) == "string", "Attempt to callServer with invalid eventName")
 
-	local replication = self:getReplication()
+	local replication = self.replication
 	local replicationId = replication.id
 
 	local remote = self:establish(eventName)

@@ -39,8 +39,7 @@ function replication:__replicate(data)
 end
 
 local function replicateToClient(self, client)
-	local replication = self:getReplication(client)
-
+	local replication = self:isReplicated(client)
 	assert(replication, "Attempt to replicateToClient without replication")
 
 	local replicationId = replication.id
@@ -177,9 +176,9 @@ function replication:replicate(clients)
 end
 
 function replication:addClient(client)
-	local replication = self:getReplication()
-
 	assert(client, "Attempt to addClient without client")
+
+	local replication = self:isReplicated()
 	assert(replication, "Attempt to addClient without replication")
 
 	local clients = replication.clients
@@ -196,27 +195,14 @@ function replication:addClient(client)
 end
 
 function replication:addClients(clients)
-	local replication = self:getReplication()
-
 	assert(type(clients) == "table", "Attempt to addClients with invalid clients")
+
+	local replication = self:isReplicated()
 	assert(replication, "Attempt to addClients without replication")
 
 	for _, client in ipairs(clients) do
 		self:addClient(client)
 	end
-end
-
-function replication:getReplication(...) -- TODO: ADD SANITY (when a function calls getReplication, should it replicate to everyone or no one?)
-	local replication = self.replication
-	if replication then
-		return replication
-	end
-
-	replication = self:replicate(...)
-
-	assert(replication, "Attempt to getReplication with no replication created")
-
-	return replication
 end
 
 function replication:isReplicated()

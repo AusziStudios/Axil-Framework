@@ -12,7 +12,7 @@ local establishedRemotes = {}
 
 -- Create events
 function listener:establish(eventName)
-	local replication = self:getReplication()
+	local replication = self:isReplicated()
 	assert(replication, "Attempt to establish without replication")
 
 	local remotes = replication.remotes
@@ -69,7 +69,9 @@ function listener:callClient(eventName, client, ...) -- Calls a specific client,
 
 	self:addClient(client)
 
-	local replication = self:getReplication()
+	local replication = self:isReplicated()
+	assert(replication, "Attempt to callClient without being replicated")
+
 	local replicationId = replication.id
 
 	assert(replicationId, "Attempt to callClient without replicationId")
@@ -84,6 +86,9 @@ end
 function listener:callClients(eventName, clients, ...) -- Calls specific clients, replicating if neccecary
 	assert(type(eventName) == "string", "Attempt to callClients with invalid ventName")
 	assert(type(clients) == "table", "Attempt to callClients with invalid clients")
+
+	local replication = self:isReplicated()
+	assert(replication, "Attempt to callClients without replication")
 	
 	for _, client in ipairs(clients) do
 		self:callClient(eventName, client, ...)
@@ -91,7 +96,8 @@ function listener:callClients(eventName, clients, ...) -- Calls specific clients
 end
 
 function listener:callAllClients(eventName, ...) -- Calls all currently replicated clients
-	local replication = self:getReplication()
+	local replication = self:isReplicated()
+	assert(replication, "Attempt to callAllClients without replication")
 
 	local clients = replication["clients"] or Players:GetPlayers()
 
