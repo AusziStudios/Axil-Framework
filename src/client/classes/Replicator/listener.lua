@@ -40,7 +40,7 @@ end
 function listener:onClient(eventName, callback)
 	local replicationCallbacks = self.replicationCallbacks or {}
 	local eventCallbacks = replicationCallbacks[eventName] or {}
-	
+
 	table.insert(eventCallbacks, callback)
 
 	replicationCallbacks[eventName] = eventCallbacks
@@ -66,7 +66,7 @@ replicatorRemotes:WaitForChild("establish").OnClientEvent:Connect(function(estab
 				local success, returned = pcall(function()
 					callback(table.unpack(vararg))
 				end)
-				assert(success, "Error when running onClient callback on " .. tostring(replicationId) .. ":\n" .. tostring(returned))
+				assert(success, "Error when running onClient callback on " .. self:label() .. ":\n" .. tostring(returned))
 			end
 
 			self:call("onClient", eventName, table.unpack(vararg))
@@ -74,12 +74,14 @@ replicatorRemotes:WaitForChild("establish").OnClientEvent:Connect(function(estab
 	end
 end)
 
--- Hook events
-function listener:hook(eventName, defaultValues)
+-- Unique methods
+function listener:hook(eventName)
 	self:onClient(eventName, function(...)
-		self:call(eventName, ...)
+		self:call(...)
 	end)
+end
 
+function listener:setDefault(eventName, defaultValues)
 	for _, defaultValue in ipairs(defaultValues or {}) do
 		self:call(eventName, defaultValue)
 	end

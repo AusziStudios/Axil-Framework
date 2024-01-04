@@ -121,7 +121,7 @@ function listener:onServer(eventName, callback)
 	self:call("bindServer", eventName, callback)
 end
 
--- Hook events
+-- Unique methods
 function listener:hook(eventName)
 	self:on(eventName, function(...)
 		self:callAllClients(eventName, ...)
