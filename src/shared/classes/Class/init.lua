@@ -16,7 +16,7 @@ for _, moduleName in ipairs(config.SUB_MODULES) do
 	-- TODO: REMOVE
 	-- for methodName, method in pairs(require(script:WaitForChild(moduleName))) do
 	-- 	Class[methodName] = method
-	-- end	
+	-- end
 end
 
 function Class:label()
@@ -37,7 +37,6 @@ function Class:label()
 
 	return "{ "..className..": "..address..replicationString.." }"
 end
-
 
 -- To avoid errors on classes which call them:
 function Class:__init()
