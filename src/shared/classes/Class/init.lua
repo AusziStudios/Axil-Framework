@@ -46,8 +46,5 @@ end
 function Class:__create()
 	
 end
-function Class:__serialize(serializedSelf)
-	return serializedSelf
-end
 
 return Class

@@ -241,6 +241,53 @@ function serializationModule.unserializeCyclic(serialized)
 	return newTables[parent]
 end
 
+function serializationModule.serializeReplication(cache, data)
+	data = serializationModule.serializeCyclic(data)
+
+	local classReplacements = {}
+
+	-- TODO ids look like `TH:IS`, make the beginning half consistent because they are always random (save space in classReplacements)
+
+	tools.deepFilter(data, function(value)
+		local replicationId
+		for possibleReplicationId, possibleClass in pairs(cache) do
+			if possibleClass == value then
+				replicationId = possibleReplicationId
+				break
+			end
+		end
+		if not replicationId then
+			return value
+		end
+		
+		local classReplacement
+		repeat
+			classReplacement = HttpService:GenerateGUID(false)..":"..replicationId
+		until tools.deepContains(data, classReplacement)
+		table.insert(classReplacements, classReplacement)
+
+		return classReplacement
+	end)
+
+	data.classes = classReplacements
+
+	return data
+end
+
+function serializationModule.unserializeReplication(cache, data)
+	local classReferences = data.classes
+	local data = serializationModule.unserializeCyclic(data)
+	tools.deepFilter(data, function(value) -- Replace classes with cached ones
+		if not table.find(classReferences, value) then
+			return value
+		end
+
+		return cache[value:match(":(.*)")]
+	end)
+
+	return data
+end
+
 function serializationModule.serializeAll(object)
 	object = serializationModule.serializeCyclic(object)
 	object = serializationModule.serialize(object)

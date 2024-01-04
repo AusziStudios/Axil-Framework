@@ -18,11 +18,15 @@ replicatorRemoteUnreplicate.Parent = replicatorRemotes
 local replicatorRemoteEstablish = Instance.new("RemoteEvent")
 replicatorRemoteEstablish.Name = "establish"
 replicatorRemoteEstablish.Parent = replicatorRemotes
+local replicatorRemoteReady = Instance.new("RemoteEvent")
+replicatorRemoteReady.Name = "ready"
+replicatorRemoteReady.Parent = replicatorRemotes
 
 replicatorRemotes.Parent = remotes
 shared.replicatorRemotes = replicatorRemotes
 
 -- Create cache
 shared.cache = {}
+shared.clientReplicationQue = {}
 
 return shared

@@ -3,6 +3,7 @@
 local replication = {}
 
 local serializationModule = _G("modules.serializationModule")
+local tools = _G("modules.tools")
 
 local shared = _G("classes.Replicator.shared")
 local cache = shared.cache
@@ -15,6 +16,8 @@ local HttpService = game:GetService("HttpService")
 local Emitter = _G("classes.Emitter")
 
 local config = _G("config.classes.Replicator")
+
+local clientReplicationQue = shared.clientReplicationQue
 
 function replication:__init(...)
 	Emitter.__init(self, ...)
@@ -31,6 +34,10 @@ function replication:__create(...)
 	self.replication = nil
 end
 
+function replication:__replicate(data)
+	-- Pass
+end
+
 local function replicateToClient(self, client)
 	local replication = self:getReplication(client)
 
@@ -44,38 +51,77 @@ local function replicateToClient(self, client)
 		id = replicationId,
 	}
 
-	local serializedSelf = table.clone(self)
-	serializedSelf.replication = clientReplication
-	serializedSelf = self:__serialize(serializedSelf)
+	-- Serialize TODO 
+	-- local serializedSelf = table.clone(self)
+	-- serializedSelf.replication = clientReplication
+
+	local data = {}
+	self:call("replicateData", data)
+
+	-- Replace classes
+	data = serializationModule.serializeReplication(cache, data)
 
 	local received = false
-	local connection = replicatorRemotes.replicate.OnServerEvent:Connect(function(otherClient, otherReplicationId)
+	local connection
+	connection = replicatorRemotes.replicate.OnServerEvent:Connect(function(otherClient, otherReplicationId)
 		if client ~= otherClient or replicationId ~= otherReplicationId then
 			return
 		end
 
 		received = true
+		connection:Disconnect()
+		self:call("clientAdded", client)
 	end)
 
-	-- TODO avoid reliance on looping and waiting:
-	-- mabye cache things on the server the client needs to get once they join,
-	-- and send them once the client say's it's ready
-	for i = 1, 3 do 
-		replicatorRemotes.replicate:FireClient(client, serializedSelf)
+	replicatorRemotes.replicate:FireClient(client, clientReplication, data)
 
-		if received then
-			break
-		end
+	task.spawn(function()
 		task.wait(1)
-	end
-	if not received then
-		warn("Failed to replicate object to client " .. tostring(client.Name))
-		client:Kick("Failed to replicate object to client.")
+		if not received then
+			warn("Failed to replicate object to client " .. tostring(client.Name))
+			client:Kick("Failed to replicate object to client")
+			connection:Disconnect()
+		end
+	end)
+end
+
+local function getClientReplicationQue(client)
+	local clientQue = clientReplicationQue[client]
+	if clientQue then
+		return clientQue
 	end
 
-	self:call("clientAdded", client)
-	connection:Disconnect()
+	clientQue = {
+		ready = false,
+		classes = {},
+	}
+	clientReplicationQue[client] = clientQue
+
+	return clientQue
 end
+
+local function queReplicateToClient(self, client)
+	local clientQue = getClientReplicationQue(client)
+
+	if clientQue.ready then
+		replicateToClient(self, client)
+		return
+	end
+
+	table.insert(clientQue.classes, self)
+end
+
+shared.replicatorRemotes.ready.OnServerEvent:Connect(function(client)
+	local clientQue = getClientReplicationQue(client)
+	clientQue.ready = true
+
+	for _, class in ipairs(clientQue.classes) do
+		replicateToClient(class, client)
+	end
+end)
+Players.PlayerRemoving:Connect(function(client)
+	clientReplicationQue[client] = nil
+end)
 
 function replication:replicate(clients)
 	assert(not self.replication, "Attempt to replicate an already-replicated class")
@@ -109,15 +155,15 @@ function replication:replicate(clients)
 
 	if clients then
 		for _, client in ipairs(clients) do
-			replicateToClient(self, client)
+			queReplicateToClient(self, client)
 		end
 	else
 		local connection = Players.PlayerAdded:Connect(function(client)
-			replicateToClient(self, client)
+			queReplicateToClient(self, client)
 		end)
 		replication.connection = connection
 		for _, client in ipairs(Players:GetPlayers()) do
-			replicateToClient(self, client)
+			queReplicateToClient(self, client)
 		end
 	end
 
@@ -160,7 +206,7 @@ function replication:addClients(clients)
 	end
 end
 
-function replication:getReplication(...)
+function replication:getReplication(...) -- TODO: ADD SANITY (when a function calls getReplication, should it replicate to everyone or no one?)
 	local replication = self.replication
 	if replication then
 		return replication
@@ -205,27 +251,27 @@ function replication:unreplicate()
 	self:call("unreplicate")
 end
 
-function replication:__serialize(serializedSelf)
-	serializedSelf = Emitter.__serialize(self, serializedSelf)
+-- function replication:__serialize(serializedSelf)
+-- 	serializedSelf = Emitter.__serialize(self, serializedSelf)
 
-	local newSerializedSelf = {}
+-- 	local newSerializedSelf = {}
 
-	for attributeKey, attributeValue in pairs(serializedSelf) do
-		if type(attributeValue) == "function" then
-			continue
-		end
-		if attributeKey:sub(1, 1) == "_" then
-			continue
-		end
-		if table.find(config.IGNORE_KEYS, attributeKey) then
-			continue
-		end
-		newSerializedSelf[attributeKey] = attributeValue
-	end
+-- 	for attributeKey, attributeValue in pairs(serializedSelf) do
+-- 		if type(attributeValue) == "function" then
+-- 			continue
+-- 		end
+-- 		if attributeKey:sub(1, 1) == "_" then
+-- 			continue
+-- 		end
+-- 		if table.find(config.IGNORE_KEYS, attributeKey) then
+-- 			continue
+-- 		end
+-- 		newSerializedSelf[attributeKey] = attributeValue
+-- 	end
 
-	newSerializedSelf = serializationModule.serializeCyclic(newSerializedSelf)
+-- 	newSerializedSelf = serializationModule.serializeCyclic(newSerializedSelf)
 
-	return newSerializedSelf
-end
+-- 	return newSerializedSelf
+-- end
 
 return replication

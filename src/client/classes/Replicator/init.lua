@@ -8,6 +8,7 @@ Emitter:create("Replicator", Replicator)
 local tools = _G("modules.tools")
 
 local serializationModule = _G("modules.serializationModule")
+local tools = _G("modules.tools")
 
 local shared = _G("classes.Replicator.shared")
 local cache = shared.cache
@@ -15,81 +16,70 @@ local replicatorRemotes = shared.replicatorRemotes
 
 local replicatorListener = require(script:WaitForChild("listener"))
 
-Emitter.inherit(Replicator, replicatorListener)
+Replicator:inheritMultipleFrom({ replicatorListener })
 
-local function findCachedTable(object)
-	if type(object) ~= "table" then
-		return
-	end
-
-	local replication = object["replication"]
-	if not replication then
-		return
-	end
-
-	local replicationId = replication["id"]
-	if not replicationId then
-		return
-	end
-
-	local cachedTable = cache[replicationId]
-	return cachedTable
-end
-
-local function replaceReplicated(replicatedClass)
-	for _, object in ipairs(tools.expandTable(replicatedClass)) do
-		for key, value in pairs(object) do
-			local newKey = findCachedTable(key)
-			local newValue = findCachedTable(value)
-			
-			object[newKey or key] = newValue or value
-		end
-	end
-end
-
--- TODO: Remove
--- function create:newFromPreset(preset, ...)	
--- 	local classInstance = createClass(self, self.className or preset.className, preset, nil, true, ...)
-
--- 	local initializeMethod = classInstance["__init"]
--- 	if initializeMethod then
--- 		initializeMethod(classInstance, table.unpack(classInstance.initParams))
+-- TODO: DELETE?
+-- local function findCachedTable(object)
+-- 	if type(object) ~= "table" then
+-- 		return
 -- 	end
-	
--- 	return classInstance
+
+-- 	local replication = object["replication"]
+-- 	if not replication then
+-- 		return
+-- 	end
+
+-- 	local replicationId = replication["id"]
+-- 	if not replicationId then
+-- 		return
+-- 	end
+
+-- 	local cachedTable = cache[replicationId]
+-- 	return cachedTable
 -- end
 
-local function onClientReplicate(replicatedClass)
-	replicatedClass = serializationModule.unserializeCyclic(replicatedClass)
+-- local function replaceReplicated(replicatedClass)
+-- 	for _, object in ipairs(tools.expandTable(replicatedClass)) do
+-- 		for key, value in pairs(object) do
+-- 			local newKey = findCachedTable(key)
+-- 			local newValue = findCachedTable(value)
 
-	local className = replicatedClass.replication.className
-	local class = _G.require("classes."..tostring(className))
+-- 			object[newKey or key] = newValue or value
+-- 		end
+-- 	end
+-- end
 
-	if not class then
-		warn("Attempt to replicate class which could not be found", className)
-		return
-	end
-
-	replaceReplicated(replicatedClass)
-
-	local initParams = replicatedClass.initParams or {}
-	local replicationId = replicatedClass.replication.id
+local function onClientReplicate(replication, data) --TODO NEW FEATURE
+	local replicationId = replication.id
 
 	if cache[replicationId] then
 		warn("Duplicate class cached on client")
 		return
 	end
 
-	-- TODO REMOVE: local self = class:newFromPreset(replicatedClass, table.unpack(initParams))
-	-- INHERIT/CREATE THE CLASS
+	local className = replication.className
+	local class = _G.require("classes." .. tostring(className))
 
-	local self = class:new(table.unpack(initParams))
+	if not class then
+		warn("Attempt to replicate class which could not be found", className)
+		return
+	end
+
+	data = serializationModule.unserializeReplication(cache, data)
+
+	local self = {}
+	tools.inherit(class, self)
+
+	local __replicate = self["__replicate"]
+	if __replicate then
+		__replicate(self, data)
+	end
 
 	cache[replicationId] = self
 
-	self:call("replicate")
-
 	replicatorRemotes:WaitForChild("replicate"):FireServer(replicationId)
+
+	self:call("replicate")
 end
 
 local function onClientUnreplicate(replicationId)
@@ -116,5 +106,7 @@ function Replicator:getReplication()
 
 	return replication
 end
+
+replicatorRemotes:WaitForChild("ready"):FireServer()
 
 return Replicator

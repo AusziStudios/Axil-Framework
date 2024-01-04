@@ -74,4 +74,15 @@ replicatorRemotes:WaitForChild("establish").OnClientEvent:Connect(function(estab
 	end
 end)
 
+-- Hook events
+function listener:hook(eventName, defaultValues)
+	self:onClient(eventName, function(...)
+		self:call(eventName, ...)
+	end)
+
+	for _, defaultValue in ipairs(defaultValues or {}) do
+		self:call(eventName, defaultValue)
+	end
+end
+
 return listener

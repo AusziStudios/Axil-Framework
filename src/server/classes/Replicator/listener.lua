@@ -115,4 +115,11 @@ function listener:onServer(eventName, callback)
 	self:call("bindServer", eventName, callback)
 end
 
+-- Hook events
+function listener:hook(eventName)
+	self:on(eventName, function(...)
+		self:callAllClients(eventName, ...)
+	end)
+end
+
 return listener
