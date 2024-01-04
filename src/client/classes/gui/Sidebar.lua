@@ -46,7 +46,7 @@ end
 function Sidebar:addButton(text, callback)
 	local instance = self.instance
 
-	assert(instance, "Attempt to add button withought Instance")
+	assert(instance, "Attempt to add button without Instance")
 
 	table.insert(self.buttons, {
 		text = text,

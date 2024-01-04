@@ -26,7 +26,7 @@ local function makeGui(self)
 end
 
 function Gui:__init(guiName, guiParent)
-	assert(type(guiName) == "string", "Attempt to initialize Gui withought valid guiName")
+	assert(type(guiName) == "string", "Attempt to initialize Gui without valid guiName")
 
 	Preset.__init(self, self.className)
 
@@ -49,7 +49,7 @@ function Gui:apply()
 
 	local existingInstance = self.instance
 
-	assert(presetItem, "Attempt to apply Gui withought presetItem")
+	assert(presetItem, "Attempt to apply Gui without presetItem")
 
 	if existingInstance then
 		existingInstance:Destroy()
