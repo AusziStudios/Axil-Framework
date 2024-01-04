@@ -1,9 +1,7 @@
 -- An abstract class derivved from Emitter. Connects emitter across client-server boundary.
 
-local Replicator = {}
-
 local Emitter = _G("classes.Emitter")
-Emitter:create("Replicator", Replicator)
+local Replicator = Emitter:create("Replicator")
 
 local tools = _G("modules.tools")
 

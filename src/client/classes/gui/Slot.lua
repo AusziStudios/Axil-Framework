@@ -1,7 +1,5 @@
-local Slot = {}
-
 local Gui = _G("classes.gui.Gui")
-Gui:create("Slot", Slot)
+local Slot = Gui:create("Slot")
 
 function Slot:__init(...)
 	Gui.__init(self, ...)

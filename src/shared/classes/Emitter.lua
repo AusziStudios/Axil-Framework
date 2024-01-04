@@ -1,9 +1,7 @@
 -- An abstract class which allows for transmission of same-side events
 
-local Emitter = {}
-
 local Class = _G("classes.Class")
-Class:create("Emitter", Emitter)
+local Emitter = Class:create("Emitter")
 
 function Emitter:__create(...)
 	Class.__create(self, ...)

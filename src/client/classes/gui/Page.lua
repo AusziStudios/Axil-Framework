@@ -1,7 +1,5 @@
-local Page = {}
-
 local Gui = _G("classes.gui.Gui")
-Gui:create("Page", Page)
+local Page = Gui:create("Page")
 
 local pages = {}
 

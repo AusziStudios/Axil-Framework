@@ -1,7 +1,5 @@
-local Mixer = {}
-
 local Emitter = _G("classes.Emitter")
-Emitter:create("Mixer", Mixer)
+local Mixer = Emitter:create("Mixer")
 
 local config = _G("config.classes.Mixer")
 

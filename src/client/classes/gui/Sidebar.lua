@@ -1,7 +1,5 @@
-local Sidebar = {}
-
 local Page = _G("classes.gui.Page")
-Page:create("Sidebar", Sidebar)
+local Sidebar = Page:create("Sidebar")
 
 function Sidebar:__init(guiName, guiParent)
 	Page.__init(self, guiName, guiParent)

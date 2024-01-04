@@ -1,9 +1,7 @@
 -- An abstract class which inherits from Replicators. Is initalized with a table, conntaining information about all instances.
 
-local Preset = {}
-
 local Replicator = _G("classes.Replicator")
-Replicator:create("Preset", Preset)
+local Preset = Replicator:create("Preset")
 
 local tools = _G("modules.tools")
 

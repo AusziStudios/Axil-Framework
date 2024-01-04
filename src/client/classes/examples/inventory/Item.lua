@@ -1,6 +1,4 @@
-local Item = {}
-
 local Replicator = _G("classes.Replicator")
-Replicator:create("examples.inventory.Container", Item)
+local Item = Replicator:create("examples.inventory.Item")
 
 return Item

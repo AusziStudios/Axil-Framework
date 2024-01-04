@@ -1,7 +1,5 @@
-local Container = {}
-
 local Replicator = _G("classes.Replicator")
-Replicator:create("examples.inventory.Container", Container)
+local Container = Replicator:create("examples.inventory.Container")
 
 function Container:__replicate(data)
 	-- Class is initialized here instead of :__init()

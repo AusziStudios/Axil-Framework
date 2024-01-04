@@ -28,7 +28,9 @@ function create:inheritMultipleFrom(classes)
 	tools.inheritMultiple(classes, self)
 end
 
-function create:create(className, class, ...)
+function create:create(className, ...)
+	local class = {}
+	
 	local address = tostring(class):match("table: 0x(.*)")
 	tools.inherit(self, class)
 	class.className = className

@@ -1,7 +1,5 @@
-local Window = {}
-
 local Page = _G("classes.gui.Page")
-Page:create("Window", Window)
+local Window = Page:create("Window")
 
 function Window:__init(guiName, guiParent)
 	Page.__init(self, guiName, guiParent)

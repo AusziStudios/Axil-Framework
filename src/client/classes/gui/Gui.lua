@@ -1,9 +1,7 @@
-local Gui = {}
-
 local Preset = _G("classes.Preset")
 local GuiPreset = _G("presets.Gui")
 
-Preset:create("Gui", Gui, GuiPreset, "Gui")
+local Gui = Preset:create("Gui", GuiPreset, "Gui")
 
 local allGuis = {}
 

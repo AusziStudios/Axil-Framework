@@ -1,10 +1,8 @@
-local World = {}
-
 -- Get the Emitter class
 local Emitter = _G("classes.Emitter")
 
 -- Create the class, inheriting from Emitter
-Emitter:create("World", World)
+local World = Emitter:create("World")
 
 -- Fetch services, modules, and other classes
 local terrain = workspace.Terrain

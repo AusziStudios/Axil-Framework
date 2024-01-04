@@ -1,11 +1,9 @@
 -- An abstract class which inherits from Replicators. Contains an instance (cloned) model, and a base (original) model as attributes.
 
-local Object = {}
-
 local RunService = game:GetService("RunService")
 
 local Preset = _G("classes.Preset")
-Preset:create("Object", Object)
+local Object = Preset:create("Object")
 
 function Object:__init(...)
 	Preset.__init(self, ...)
