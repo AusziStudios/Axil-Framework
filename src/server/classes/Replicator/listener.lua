@@ -37,7 +37,7 @@ function listener:establish(eventName)
 
 		assert(self, "Attempt to receive event without cached class")
 
-		vararg = serializationModule.unserializeCyclic(vararg) or {}
+		vararg = serializationModule.unserializeReplication(vararg) or {}
 
 		for _, eventCallback in ipairs(eventCallbacks) do
 			local success, returned = pcall(function()
@@ -74,7 +74,7 @@ function listener:callClient(eventName, client, ...) -- Calls a specific client,
 
 	assert(replicationId, "Attempt to callClient without replicationId")
 
-	local vararg = serializationModule.serializeCyclic({...})
+	local vararg = serializationModule.serializeReplication({...})
 
 	remote:FireClient(client, replicationId, vararg)
 

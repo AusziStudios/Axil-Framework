@@ -29,7 +29,7 @@ function listener:callServer(eventName, ...)
 
 	local remote = self:establish(eventName)
 
-	local vararg = serializationModule.serializeCyclic({...})
+	local vararg = serializationModule.serializeReplication({...})
 
 	remote:FireServer(replicationId, vararg)
 
@@ -55,7 +55,7 @@ replicatorRemotes:WaitForChild("establish").OnClientEvent:Connect(function(estab
 			local self = cache[replicationId]
 			assert(self, "Attempt to receive onClient remote without cached class")
 
-			vararg = serializationModule.unserializeCyclic(vararg) or {}
+			vararg = serializationModule.unserializeReplication(vararg) or {}
 
 			local eventName = remote.Name
 
