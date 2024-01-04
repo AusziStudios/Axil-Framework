@@ -56,7 +56,7 @@ local function replicateToClient(self, client)
 	-- serializedSelf.replication = clientReplication
 
 	local data = {}
-	self:call("replicateData", data)
+	self:call("replicateData", data, client)
 
 	-- Replace classes
 	data = serializationModule.serializeReplication(cache, data)
