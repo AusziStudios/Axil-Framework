@@ -10,6 +10,22 @@ function create.__call()
 end
 create.new = create.__call
 
+function create:inheritMethod(methodName, newMethod, ending)
+	local originalMethod = self[methodName]
+
+	self[methodName] = function(self, ...)
+		if ending then
+			newMethod(self, ...)
+		end
+
+		originalMethod(self, ...)
+
+		if not ending then
+			newMethod(self, ...)
+		end
+	end
+end
+
 function create:inherit(class)
 	tools.inherit(self, class)
 end
