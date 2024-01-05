@@ -38,11 +38,13 @@ function Page:close()
 
 	self:call("close")
 end
-	else
-		self.instance.Visible = true
-	end
 
-	self:call("close")
+function Page:toggle()
+	if self:isOpen() then
+		self:close()
+	else
+		self:open()
+	end
 end
 
 return Page
