@@ -3,6 +3,10 @@ local Page = Gui:create("Page")
 
 local pages = {}
 
+function Page:isOpen()
+	return pages[#pages] == self
+end
+
 function Page:open()
 	if pages[#pages] == self then
 		warn("Attempt to open alread-open page")
