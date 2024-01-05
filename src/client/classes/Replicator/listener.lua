@@ -1,10 +1,10 @@
 local listener = {}
 
-local shared = _G("classes.Replicator.shared")
+local serializationModule = _G("modules.serializationModule")
+
+local shared = require(script.Parent:WaitForChild("shared"))
 local cache = shared.cache
 local replicatorRemotes = shared.replicatorRemotes
-
-local serializationModule = _G("modules.serializationModule")
 
 -- Find events
 function listener:establish(eventName)

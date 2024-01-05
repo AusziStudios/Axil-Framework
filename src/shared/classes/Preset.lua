@@ -119,6 +119,11 @@ function Preset:__init(id)
 	return item
 end
 
+function Preset:__replicate(data)
+	Replicator.__replicate(self, data)
+	Preset.__init(self, data.id)
+end
+
 function Preset:isA(anscestorId)
 	local id = self.id
 
