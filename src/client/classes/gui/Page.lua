@@ -12,17 +12,12 @@ function Page:open()
 		warn("Attempt to open alread-open page")
 		return
 	end
-	table.insert(pages, self)
-
 	for _, other in ipairs(pages) do
 		other.instance.Visible = false
 	end
 
-	if self:hasBindings("show") then
-		self:call("show")
-	else
-		self.instance.Visible = true
-	end
+	table.insert(pages, self)
+	self.instance.Visible = true
 
 	self:call("open")
 end
@@ -41,8 +36,8 @@ function Page:close()
 		newActivePage.instance.Visible = true
 	end
 
-	if self:hasBindings("hide") then
-		self:call("hide")
+	self:call("close")
+end
 	else
 		self.instance.Visible = true
 	end
